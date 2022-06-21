@@ -1,7 +1,8 @@
-var injected = false;
+var injected = true;
 
 function injectedFunction() {
-  auto_fill()
+  let filler = new SmartFiller()
+  filler.fillAll()
 }
 
 function fill(tab) {
