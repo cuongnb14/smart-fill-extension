@@ -1,33 +1,15 @@
-var injected = true;
-
-function injectedFunction() {
+function fillAllInjectedFunction() {
   let filler = new SmartFiller()
   filler.fillAll()
 }
 
 function fill(tab) {
-  if(injected) {
     chrome.scripting.executeScript(
       {
         target: { tabId: tab.id },
-        function: injectedFunction
+        function: fillAllInjectedFunction
       }
     )
-
-  } else {
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: tab.id },
-        files: [
-          "libs/jquery-3.6.0.min.js",
-          "libs/faker-3.1.0.js", 
-          "auto_fill.js"
-        ]
-      }
-    )
-    injected = true;
-  }
-  
 }
 
 
