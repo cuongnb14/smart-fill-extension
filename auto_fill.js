@@ -35,7 +35,10 @@ var htmlInputTypes = {
     return result;
   },
   "datetime-local" : "",
-  "email" : "internet.email",
+  "email" : function() {
+    return faker.internet.email().toLowerCase()
+  },
+  "name" : "name.findName",
   "month" : function(){
     var rndDate = randomDate(new Date(1977, 8, 1), new Date(2999, 8, 1));
     var result = [
@@ -83,6 +86,16 @@ var randomizeInputValue = function(el){
     switch( $(el)[0].nodeName.toLowerCase() ) {
       case "input":
         var type = $(el).attr('type');
+        var inputName = $(el).attr('name').toLowerCase();
+
+        if (inputName.includes("name")){
+          type = 'name'
+        } else if (inputName.includes("email")) {
+          type = 'email'
+        } else if (inputName.includes("phone")) {
+          type = 'tel'
+        }
+
         var value = faker.lorem.word();
         var fakerMethod = htmlInputTypes[type];
         if (fakerMethod){
@@ -107,6 +120,11 @@ var randomizeInputValue = function(el){
   }
 };
 
-$("input:enabled, select:enabled, textarea:enabled").not(':button,:hidden,input[type=submit],input[readonly]').each(function(){
-  randomizeInputValue(this);
-}); 
+
+function auto_fill() {
+  $("input:enabled, select:enabled, textarea:enabled").not(':button,:hidden,input[type=submit],input[readonly]').each(function(){
+    randomizeInputValue(this);
+  }); 
+}
+
+auto_fill()
