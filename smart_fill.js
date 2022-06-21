@@ -13,21 +13,9 @@ function pad(num, size) {
     return s;
 }
 
-function isFunction(functionToCheck) {
-    var getType = {};
-    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
-
 function randomInt(min, max) {
     var result = Math.floor((Math.random() * max) + min);
     return result;
-}
-
-function selectRandomRadio(el) {
-    var groupName = $(el).attr("name");
-    var radios = $("input:radio:enabled[name='" + groupName + "']");
-    var idx = randomInt(0, radios.length - 1);
-    $(radios[idx]).prop("checked", true);
 }
 
 
@@ -85,7 +73,12 @@ const ValueGenerator = {
         var result = rndDate.getFullYear() + "-W" + pad(weeknumber, 2);
         return result;
     },
-    "radio": selectRandomRadio,
+    "radio": function (el) {
+        var groupName = $(el).attr("name");
+        var radios = $("input:radio:enabled[name='" + groupName + "']");
+        var idx = randomInt(0, radios.length - 1);
+        $(radios[idx]).prop("checked", true);
+    },
     "checkbox": function (el) {
         var randomBoolean = Math.random() >= 0.5;
         $(el).attr("checked", randomBoolean);
