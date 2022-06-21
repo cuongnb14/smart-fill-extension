@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Smart Fill Form Settings</title>
+    <link rel="stylesheet" href="libs/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h2 style="margin-top: 30px">Add page rules</h2>
+        <form>
+            <div class="form-group">
+                <label for="pageUrl">Page url</label>
+                <input type="text" class="form-control" id="pageUrl" aria-describedby="emailHelp"
+                    placeholder="Page url">
+            </div>
+            <div class="form-group">
+                <label for="inputSelector">Input selector</label>
+                <input type="text" class="form-control" id="inputSelector" placeholder="Input selector">
+            </div>
+            <div class="form-group">
+                <label for="value-type">Value type</label>
+                <select class="form-control" id="valueType" name="valueType">
+                    <option value="fixed">Fixed value</option>
+                    <option value="rangeNumner">Range number</option>
+                    <option value="enum">Enum</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="args">Args</label>
+                <input type="text" class="form-control" id="args" placeholder="Args">
+            </div>
+            <button id="save" type="button" class="btn btn-primary">Submit</button>
+            <button id="clearAll" type="button" class="btn btn-danger">Clear All Rules</button>
+        </form>
+
+        <table id="pageRuleTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Page url</th>
+                    <th scope="col">Input selector</th>
+                    <th scope="col">Value type</th>
+                    <th scope="col">Args</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre id="pageRules"></pre>
+    </div>
+
+
+
+
+    <script src="libs/jquery-3.6.0.min.js"></script>
+    <script src="options.js"></script>
+</body>
+
+</html>
