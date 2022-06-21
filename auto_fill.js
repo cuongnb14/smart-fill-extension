@@ -23,6 +23,9 @@ var htmlInputTypes = {
   "color" : function(){
     return '#'+pad(Math.floor(Math.random()*16777215).toString(16), 6);
   },
+  "title" : function(){
+    return faker.lorem.sentence()
+  },
   "date" : function(){
     var rndDate = randomDate(new Date(1977, 8, 1), new Date(2999, 8, 1));
     var result = [
@@ -86,6 +89,10 @@ var randomizeInputValue = function(el){
     switch( $(el)[0].nodeName.toLowerCase() ) {
       case "input":
         var type = $(el).attr('type');
+
+        if (type == "file") {
+          return
+        }
         var inputName = $(el).attr('name').toLowerCase();
 
         if (inputName.includes("name")){
@@ -94,6 +101,10 @@ var randomizeInputValue = function(el){
           type = 'email'
         } else if (inputName.includes("phone")) {
           type = 'tel'
+        } else if (inputName.includes("link")) {
+          type = 'url'
+        } else if (inputName.includes("title")) {
+          type = 'title'
         }
 
         var value = faker.lorem.word();

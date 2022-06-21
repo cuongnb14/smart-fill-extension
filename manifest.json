@@ -1,8 +1,8 @@
 {
-	"name": "Auto Fill",
+	"name": "Smart Fill Form",
 	"version": "3.0",
 	"manifest_version": 3,
-	"description": "This chrome extension fills out forms automatically. It aims to make life for developers easier...",
+	"description": "Auto fill form base on input type, name,...",
 	"icons": { 
 		"16": "icon.png",
 		"48": "icon.png",
