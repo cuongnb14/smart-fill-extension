@@ -60,4 +60,9 @@ function clearAllRules() {
 document.getElementById('save').addEventListener('click', savePageRule);
 document.getElementById('clearAll').addEventListener('click', clearAllRules);
 
-drawPageRulesTable()
+chrome.storage.sync.get({
+    pageRules: {}
+}, function (items) {
+    let pageRules = items.pageRules
+    drawPageRulesTable(pageRules)
+})

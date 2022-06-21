@@ -10,33 +10,48 @@
 <body>
     <div class="container">
         <h2 style="margin-top: 30px">Add page rules</h2>
+
         <form>
-            <div class="form-group">
-                <label for="pageUrl">Page url</label>
-                <input type="text" class="form-control" id="pageUrl" aria-describedby="emailHelp"
-                    placeholder="Page url">
+            <div class="form-group row">
+                <label for="pageUrl" class="col-sm-2 col-form-label">Page Url</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="pageUrl">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="inputSelector">Input selector</label>
-                <input type="text" class="form-control" id="inputSelector" placeholder="Input selector">
+
+            <div class="form-group row">
+                <label for="inputSelector" class="col-sm-2 col-form-label">Input selector</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputSelector">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="value-type">Value type</label>
-                <select class="form-control" id="valueType" name="valueType">
-                    <option value="fixed">Fixed value</option>
-                    <option value="rangeNumner">Range number</option>
-                    <option value="enum">Enum</option>
-                </select>
+
+            <div class="form-group row">
+                <label for="inputSelector" class="col-sm-2 col-form-label">Value type</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="valueType" name="valueType">
+                        <option value="fixed">Fixed value</option>
+                        <option value="rangeNumner">Range number</option>
+                        <option value="enum">Enum</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="args">Args</label>
-                <input type="text" class="form-control" id="args" placeholder="Args">
+
+            <div class="form-group row">
+                <label for="args" class="col-sm-2 col-form-label">Args</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="args">
+                </div>
             </div>
+
             <button id="save" type="button" class="btn btn-primary">Submit</button>
             <button id="clearAll" type="button" class="btn btn-danger">Clear All Rules</button>
         </form>
 
-        <table id="pageRuleTable" class="table table-bordered">
+        <hr />
+
+
+        <table style="margin-top: 30px;" id="pageRuleTable" class="table table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Page url</th>
