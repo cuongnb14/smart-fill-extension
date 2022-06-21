@@ -1,14 +1,14 @@
 {
 	"name": "Auto Fill",
 	"version": "1.4",
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"description": "This chrome extension fills out forms automatically. It aims to make life for developers easier...",
 	"icons": { 
 		"16": "icon.png",
 		"48": "icon.png",
 		"128": "icon.png" 
 	},
-	"browser_action": {
+	"action": {
 		"default_icon": "icon.png"
 	},
 	"content_scripts": [
@@ -20,12 +20,13 @@
 			"js": ["jquery-3.1.1.min.js", "faker.js"]
 		}
 	],
-	"background": { "page": "background.html", "persistent": true },
+	"background": { "service_worker": "background.js", "type": "module" },
 	"permissions": [
 	 	"clipboardWrite",
 		"activeTab",
 		"notifications",
 		"contextMenus",
-		"storage"
+		"storage",
+		"scripting"
 	]
 }
