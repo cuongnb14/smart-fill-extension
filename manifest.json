@@ -4,12 +4,12 @@
 	"manifest_version": 2,
 	"description": "This chrome extension fills out forms automatically. It aims to make life for developers easier...",
 	"icons": { 
-		"16": "pen.png",
-		"48": "pen.png",
-		"128": "pen.png" 
+		"16": "icon.png",
+		"48": "icon.png",
+		"128": "icon.png" 
 	},
 	"browser_action": {
-		"default_icon": "pen.png"
+		"default_icon": "icon.png"
 	},
 	"content_scripts": [
 		{
