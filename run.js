@@ -1,5 +1,3 @@
-
-
 function randomDate(start, end) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
@@ -109,35 +107,6 @@ var randomizeInputValue = function(el){
   }
 };
 
-chrome.extension.sendRequest({
-  "action": "getOptions",
-  "args": []
-}, function(response){
-  if (deepAutofillChromeExtensionSettings){
-    if (deepAutofillChromeExtensionSettings.randomLocale){
-      console.info("setting locale", deepAutofillChromeExtensionSettings.randomLocale);
-      faker.locale = deepAutofillChromeExtensionSettings.randomLocale
-    }
-    for(var i = 0; i < deepAutofillChromeExtensionSettings.fields.length; i++){
-      var field = deepAutofillChromeExtensionSettings.fields[i];
-      var value = faker.lorem.word();
-      if (field.static){
-        value = field.static;
-      }
-      if (field.random){
-        value = faker.fake(field.random);
-      }
-      
-      if (!field.static && !field.random){
-        randomizeInputValue($(field.selector));
-      } else {
-        $(field.selector).focus().val(value);  
-      }
-      console.debug(field.selector, value);   
-    }
-  } else {
-    $("input:enabled, select:enabled, textarea:enabled").not(':button,:hidden,input[type=submit],input[readonly]').each(function(){
-      randomizeInputValue(this);
-    }); 
-  }
-});  
+$("input:enabled, select:enabled, textarea:enabled").not(':button,:hidden,input[type=submit],input[readonly]').each(function(){
+  randomizeInputValue(this);
+}); 

@@ -4,12 +4,12 @@
 	"manifest_version": 2,
 	"description": "This chrome extension fills out forms automatically. It aims to make life for developers easier...",
 	"icons": { 
-		"16": "icon16.png",
-		"48": "icon48.png",
-		"128": "icon128.png" 
+		"16": "pen.png",
+		"48": "pen.png",
+		"128": "pen.png" 
 	},
 	"browser_action": {
-		"default_icon": "icon48.png"
+		"default_icon": "pen.png"
 	},
 	"content_scripts": [
 		{
@@ -20,7 +20,6 @@
 			"js": ["jquery-3.1.1.min.js", "faker.js"]
 		}
 	],
-	"options_page": "options.html",
 	"background": { "page": "background.html", "persistent": true },
 	"permissions": [
 	 	"clipboardWrite",
@@ -28,6 +27,5 @@
 		"notifications",
 		"contextMenus",
 		"storage"
-	],
-	"homepage_url": "https://github.com/s-a/deep-autofill-chrome-extension"
+	]
 }
