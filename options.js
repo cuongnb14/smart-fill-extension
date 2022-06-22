@@ -1,37 +1,83 @@
-function drawPageRulesTable(pageRules) {
-    let tbody = $('#pageRuleTable tbody')
-    tbody.html('')
-    
 
-    for (const [pageUrl, rules] of Object.entries(pageRules)) {
-        for (const [inputSelector, value] of Object.entries(rules)) {
-            let deleteBtn = $('<button/>', {
-                class: 'btn btn-danger btn-sm',
-                on: {
-                    click: function() {
-                        delete pageRules[pageUrl][inputSelector]
-                        if ($.isEmptyObject(pageRules[pageUrl])) {
-                            delete pageRules[pageUrl]
-                        }
-                        chrome.storage.sync.set({
-                            pageRules: pageRules
-                        }, function () {
-                            drawPageRulesTable(pageRules)
-                        });
+function getTableRuleHeader() {
+    let thead = $('<thead/>')
+    let tr = $('<tr/>')
+    tr.append($('<th/>').html('Input selector'))
+    tr.append($('<th/>').html('Value type'))
+    tr.append($('<th/>').html('Args'))
+    tr.append($('<th/>').html('Action'))
+    thead.append(tr)
+    return thead
+}
+
+function getTableRuleRow(inputSelector, valueType, args, action) {
+    let tr = $('<tr/>')
+    tr.append($('<td/>').html(inputSelector))
+    tr.append($('<td/>').html(valueType))
+    tr.append($('<td/>').html(args))
+    tr.append($('<td/>').append(action))
+    return tr
+}
+
+function drawTableRule(pageRules, pageUrl) {
+    let container = $('#pageRuleContainer')
+    container.append($('<span/>').html(pageUrl))
+    let table = $('<table/>', {
+        class: 'table table-bordered'
+    })
+    let thead = getTableRuleHeader()
+    table.append(thead)
+
+    let tbody = $('<tbody/>')
+    let inputRules = pageRules[pageUrl]
+    for (const [inputSelector, value] of Object.entries(inputRules)) {
+        let deleteBtn = $('<button/>', {
+            class: 'btn btn-danger btn-sm',
+            on: {
+                click: function() {
+                    delete pageRules[pageUrl][inputSelector]
+                    if ($.isEmptyObject(pageRules[pageUrl])) {
+                        delete pageRules[pageUrl]
                     }
+                    chrome.storage.sync.set({
+                        pageRules: pageRules
+                    }, function () {
+                        drawAllTableRule(pageRules)
+                    });
                 }
-            }).html('Delete')
-            let tr = $('<tr/>')
+            }
+        }).html('Delete')
 
-            tr.append($('<th/>').html(pageUrl))
-            tr.append($('<td/>').html(inputSelector))
-            tr.append($('<td/>').html(value['valueType']))
-            tr.append($('<td/>').html(value['args']))
-            tr.append($('<td/>').append(deleteBtn))
-            
-            tbody.append(tr)
+        let tr = getTableRuleRow(inputSelector, value['valueType'], value['args'], deleteBtn)
+        tbody.append(tr)
+    }
+    table.append(tbody)
+    container.append(table)
+
+    let deletePageRuleBtn = $('<button/>', {
+        class: 'btn btn-danger btn-sm',
+        on: {
+            click: function() {
+                delete pageRules[pageUrl]
+                chrome.storage.sync.set({
+                    pageRules: pageRules
+                }, function () {
+                    drawAllTableRule(pageRules)
+                });
+            }
         }
+    }).html('Delete page rules')
+    container.append(deletePageRuleBtn)
+    container.append($('<hr/>'))
+}
 
+
+function drawAllTableRule(pageRules) {
+    let container = $('#pageRuleContainer')
+    container.html('')
+    
+    for (const [pageUrl, rules] of Object.entries(pageRules)) {
+        drawTableRule(pageRules, pageUrl)
     }
 
 }
@@ -59,8 +105,7 @@ function savePageRule() {
         chrome.storage.sync.set({
             pageRules: pageRules
         }, function () {
-            document.getElementById('pageRules').textContent = JSON.stringify(pageRules, null, 2)
-            drawPageRulesTable(pageRules)
+            drawAllTableRule(pageRules)
         });
 
     });
@@ -70,17 +115,16 @@ function clearAllRules() {
     chrome.storage.sync.set({
         pageRules: {}
     }, function () {
-        document.getElementById('pageRules').textContent = JSON.stringify(pageRules, null, 2)
-        drawPageRulesTable(pageRules)
+        drawAllTableRule(pageRules)
     });
 }
 
 document.getElementById('save').addEventListener('click', savePageRule);
-document.getElementById('clearAll').addEventListener('click', clearAllRules);
+// document.getElementById('clearAll').addEventListener('click', clearAllRules);
 
 chrome.storage.sync.get({
     pageRules: {}
 }, function (items) {
     let pageRules = items.pageRules
-    drawPageRulesTable(pageRules)
+    drawAllTableRule(pageRules)
 })
