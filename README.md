@@ -1,5 +1,10 @@
 # Smart fill form extension
-Inspired from Deep Autofill Chrome Extension
 
-# Feature
+
+## Feature
 - Auto fill form base on input type and input name
+- Work on react component
+- Chrome extension manifest V3
+
+
+*Inspired from Deep Autofill Chrome Extension*
