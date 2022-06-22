@@ -132,6 +132,7 @@ class SmartFiller {
             value = faker.lorem.word()
         }
         $(el).trigger('focus').val(value);
+        $(el)[0].dispatchEvent(new Event('input', { bubbles: true }));
     }
 
     _fillSelectBox(el) {
@@ -139,10 +140,12 @@ class SmartFiller {
         var idx = randomInt(0, opts.length - 1);
         var val = opts[idx].value;
         $(el).trigger('focus').val(val);
+        $(el)[0].dispatchEvent(new Event('input', { bubbles: true }));
     }
 
     _fillTextarea(el) {
         $(el).trigger('focus').val(faker.lorem.paragraphs());
+        $(el)[0].dispatchEvent(new Event('input', { bubbles: true }));
     }
 
     fill(el) {
