@@ -14,12 +14,26 @@ function pad(num, size) {
 }
 
 function randomInt(min, max) {
-    var result = Math.floor((Math.random() * max) + min);
-    return result;
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+function randomInArray(arr) {
+    return arr[Math.floor((Math.random()*arr.length))];
 }
 
 
 const ValueGenerator = {
+    "_fixed": function(args) {
+        return args
+    },
+    "_rangeNumber": function(args) {
+        let range = args.split(',')
+        return randomInt(range[0], range[1])
+    },
+    "_enum": function(args) {
+        let range = args.split(',')
+        return randomInArray(range)
+    },
     "color": function () {
         return '#' + pad(Math.floor(Math.random() * 16777215).toString(16), 6);
     },
@@ -86,7 +100,18 @@ const ValueGenerator = {
 }
 
 class SmartFiller {
-    constructor() {
+    constructor(inputRules) {
+        this.inputRules = []
+        if (inputRules) {
+            for (const [inputSelector, rule] of Object.entries(inputRules)) {
+                let inputRule = {
+                    el: $(`input[${inputSelector}]`),
+                    rule: rule
+                }
+                this.inputRules.push(inputRule)
+            }
+        }
+        
     }
 
     getNodeName(el) {
@@ -148,7 +173,24 @@ class SmartFiller {
         $(el)[0].dispatchEvent(new Event('input', { bubbles: true }));
     }
 
+    getInputRule(el) {
+        let result = null
+        this.inputRules.forEach((rule) => {
+            if ($(el).is(rule.el)) {
+                result = rule.rule
+            }
+        });
+        return result
+    }
+
     fill(el) {
+        let rule = this.getInputRule(el)
+        if (rule) {
+            let value = ValueGenerator['_'+rule.valueType](rule.args)
+            $(el).trigger('focus').val(value);
+            $(el)[0].dispatchEvent(new Event('input', { bubbles: true }))
+            return
+        }
         let nodeName = this.getNodeName(el)
         switch (nodeName) {
             case 'input':
@@ -157,10 +199,11 @@ class SmartFiller {
 
             case "select":
                 this._fillSelectBox(el)
-                break;
+                break
+
             case "textarea":
                 this._fillTextarea(el)
-                break;
+                break
 
         }
 

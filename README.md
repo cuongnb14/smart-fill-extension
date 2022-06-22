@@ -5,6 +5,7 @@ Make Your Developer's Life Easier
 - Auto fill form base on input type and input name
 - Work on react component
 - Chrome extension manifest V3
+- Auto fill base on page rule provide by user
 
 
 *Inspired from Deep Autofill Chrome Extension*
