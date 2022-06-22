@@ -83,7 +83,7 @@ function drawAllTableRule(pageRules) {
 }
 
 function savePageRule() {
-    var pageUrl = document.getElementById('pageUrl').value;
+    var pageUrl = document.getElementById('pageUrl').value.trim();
     var inputSelector = document.getElementById('inputSelector').value;
     var valueType = document.getElementById('valueType').value;
     var args = document.getElementById('args').value;
@@ -128,3 +128,6 @@ chrome.storage.sync.get({
     let pageRules = items.pageRules
     drawAllTableRule(pageRules)
 })
+
+let urlSearch = new URLSearchParams(window.location.search)
+document.getElementById('pageUrl').value = urlSearch.get('pageUrl')

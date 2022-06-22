@@ -28,7 +28,7 @@ const ValueGenerator = {
     },
     "_rangeNumber": function(args) {
         let range = args.split(',')
-        return randomInt(range[0], range[1])
+        return randomInt(parseInt(range[0]), parseInt(range[1]))
     },
     "_enum": function(args) {
         let range = args.split(',')

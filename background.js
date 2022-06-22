@@ -25,3 +25,20 @@ chrome.action.onClicked.addListener(
     fill(tab)
   }
 );
+
+chrome.contextMenus.create({
+  id: "addPageRule",
+  title: "Smart Fill - Add page rules",
+  contexts: ["all"]
+});
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+  if (info.menuItemId == "addPageRule") {
+    console.log(tab.url);
+
+    var optionsUrl = chrome.runtime.getURL('options.html');
+    optionsUrl = optionsUrl + '?pageUrl=' + tab.url
+    chrome.tabs.create({ 'url': optionsUrl });
+  }
+});
+
