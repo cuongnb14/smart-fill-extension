@@ -5,11 +5,29 @@ function drawPageRulesTable(pageRules) {
 
     for (const [pageUrl, rules] of Object.entries(pageRules)) {
         for (const [inputSelector, value] of Object.entries(rules)) {
+            let deleteBtn = $('<button/>', {
+                class: 'btn btn-danger btn-sm',
+                on: {
+                    click: function() {
+                        delete pageRules[pageUrl][inputSelector]
+                        if ($.isEmptyObject(pageRules[pageUrl])) {
+                            delete pageRules[pageUrl]
+                        }
+                        chrome.storage.sync.set({
+                            pageRules: pageRules
+                        }, function () {
+                            drawPageRulesTable(pageRules)
+                        });
+                    }
+                }
+            }).html('Delete')
             let tr = $('<tr/>')
+
             tr.append($('<th/>').html(pageUrl))
             tr.append($('<td/>').html(inputSelector))
             tr.append($('<td/>').html(value['valueType']))
             tr.append($('<td/>').html(value['args']))
+            tr.append($('<td/>').append(deleteBtn))
             
             tbody.append(tr)
         }
