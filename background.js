@@ -1,10 +1,32 @@
 function fillAllInjectedFunction() {
   chrome.storage.sync.get(['pageRules'], function(items) {
+    let filler = null
     let tabUrl = window.location.href.split('?')[0]
-    let pageRule = items.pageRules[tabUrl]
+    let match = false
+    Object.keys(items.pageRules).forEach(pageUrl => {
+      if (!match) {
+        if (pageUrl.startsWith('^')) {
+          if(tabUrl.startsWith(pageUrl.slice(1,))){
+            match = true
+            filler = new SmartFiller(items.pageRules[pageUrl])
+          }
+        } else {
+          if (pageUrl == tabUrl) {
+            match = true
+            filler = new SmartFiller(items.pageRules[pageUrl])
+          }
+        }
+      }
+      
+    });
 
-    let filler = new SmartFiller(pageRule)
+    
+    if (!filler) {
+      filler = new SmartFiller()
+    }
+
     filler.fillAll()
+
   });
 
   

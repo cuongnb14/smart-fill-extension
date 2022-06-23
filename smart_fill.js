@@ -104,8 +104,14 @@ class SmartFiller {
         this.inputRules = []
         if (inputRules) {
             for (const [inputSelector, rule] of Object.entries(inputRules)) {
+                let el = null
+                if (inputSelector.startsWith('.') || inputSelector.startsWith('#')) {
+                    el = $(inputSelector)
+                } else {
+                    el = $(`input[name=${inputSelector}]`)
+                }
                 let inputRule = {
-                    el: $(`input[${inputSelector}]`),
+                    el: el,
                     rule: rule
                 }
                 this.inputRules.push(inputRule)
@@ -152,7 +158,7 @@ class SmartFiller {
         }
         let valueFn = ValueGenerator[valueType]
         if (valueFn) {
-            value = valueFn()
+            value = valueFn(el)
         } else {
             value = faker.lorem.word()
         }
@@ -185,6 +191,10 @@ class SmartFiller {
 
     fill(el) {
         let rule = this.getInputRule(el)
+        if (rule && rule.valueType == 'ignore') {
+            return
+        }
+
         if (rule) {
             let value = ValueGenerator['_'+rule.valueType](rule.args)
             $(el).trigger('focus').val(value);
