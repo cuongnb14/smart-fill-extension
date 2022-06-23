@@ -34,6 +34,9 @@ const ValueGenerator = {
         let range = args.split(',')
         return randomInArray(range)
     },
+    "_fakerjsFunction": function(fnName) {
+        return faker.fake("{{" + fnName + "}}")
+    },
     "color": function () {
         return '#' + pad(Math.floor(Math.random() * 16777215).toString(16), 6);
     },

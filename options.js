@@ -34,7 +34,7 @@ function drawTableRule(pageRules, pageUrl) {
         let deleteBtn = $('<button/>', {
             class: 'btn btn-danger btn-sm',
             on: {
-                click: function() {
+                click: function () {
                     delete pageRules[pageUrl][inputSelector]
                     if ($.isEmptyObject(pageRules[pageUrl])) {
                         delete pageRules[pageUrl]
@@ -57,7 +57,7 @@ function drawTableRule(pageRules, pageUrl) {
     let deletePageRuleBtn = $('<button/>', {
         class: 'btn btn-danger btn-sm',
         on: {
-            click: function() {
+            click: function () {
                 delete pageRules[pageUrl]
                 chrome.storage.sync.set({
                     pageRules: pageRules
@@ -75,7 +75,7 @@ function drawTableRule(pageRules, pageUrl) {
 function drawAllTableRule(pageRules) {
     let container = $('#pageRuleContainer')
     container.html('')
-    
+
     for (const [pageUrl, rules] of Object.entries(pageRules)) {
         drawTableRule(pageRules, pageUrl)
     }
@@ -96,7 +96,7 @@ function savePageRule() {
 
         if (!(pageUrl in pageRules)) {
             pageRules[pageUrl] = {}
-        } 
+        }
         pageRules[pageUrl][inputSelector] = {
             valueType,
             args
@@ -121,6 +121,20 @@ function clearAllRules() {
 
 document.getElementById('save').addEventListener('click', savePageRule);
 // document.getElementById('clearAll').addEventListener('click', clearAllRules);
+$("#valueType").change(function () {
+    if ($(this).val() == 'rangeNumber') {
+        $("#args").attr('placeholder', 'min,max')
+    }
+    else if ($(this).val() == 'enum') {
+        $("#args").attr('placeholder', 'Value A,Value B,Value C')
+    }
+    else if ($(this).val() == 'fakerjsFunction') {
+        $("#args").attr('placeholder', 'phone.phoneNumber')
+    } else {
+        $("#args").attr('placeholder', '')
+    }
+});
+
 
 chrome.storage.sync.get({
     pageRules: {}
