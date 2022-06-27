@@ -122,6 +122,7 @@ function clearAllRules() {
 document.getElementById('save').addEventListener('click', savePageRule);
 // document.getElementById('clearAll').addEventListener('click', clearAllRules);
 $("#valueType").change(function () {
+    $("#fnFakerjs-wrapper").hide()
     if ($(this).val() == 'rangeNumber') {
         $("#args").attr('placeholder', 'min,max')
     }
@@ -130,9 +131,14 @@ $("#valueType").change(function () {
     }
     else if ($(this).val() == 'fakerjsFunction') {
         $("#args").attr('placeholder', 'phone.phoneNumber')
+        $("#fnFakerjs-wrapper").show()
     } else {
         $("#args").attr('placeholder', '')
     }
+});
+
+$("#fnFakerjs").change(function () {
+    $("#args").val($(this).val())
 });
 
 
