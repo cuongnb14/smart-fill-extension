@@ -111,7 +111,7 @@ class SmartFiller {
                 if (inputSelector.startsWith('.') || inputSelector.startsWith('#')) {
                     el = $(inputSelector)
                 } else {
-                    el = $(`input[name=${inputSelector}]`)
+                    el = $(`input[name=${inputSelector}], textarea[name=${inputSelector}]`)
                 }
                 let inputRule = {
                     el: el,
