@@ -6,6 +6,6 @@ Make Your Developer's Life Easier
 - Work on react component
 - Chrome extension manifest V3
 - Auto fill base on page rule provide by user
-
+- Import / Export page rules
 
 *Inspired from Deep Autofill Chrome Extension*

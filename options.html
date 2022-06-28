@@ -4,32 +4,52 @@
 <head>
     <title>Smart Fill Form Settings</title>
     <link rel="stylesheet" href="libs/bootstrap.min.css">
+    <style>
+        #export-box {
+            display: none;
+            z-index: 1000;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px;
+            background-color: #e3e3e3;
+        }
 
+    </style>
 </head>
 
 <body>
     <div class="container">
+        <div id="export-box">
+            <textarea id="export-data" cols="50" rows="10"></textarea>
+            <hr>
+            <button id="btn-close-box" type="button" class="btn btn-sm btn-info">Close</button>
+        </div>
+        <div class="float-right">
+            <button id="export" type="button" class="btn btn-sm btn-info">Export</button>
+            <button id="import" type="button" class="btn btn-sm btn-info">Import</button>
+        </div>
         <h2 style="margin-top: 30px">Add page rules</h2>
 
         <form>
             <div class="form-group row">
                 <label for="pageUrl" class="col-sm-2 col-form-label">Page Url</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="pageUrl" placeholder="https://www.google.com/create-book">
+                    <input type="text" class="form-control form-control-sm" id="pageUrl" placeholder="https://www.google.com/create-book">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="inputSelector" class="col-sm-2 col-form-label">Input selector</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputSelector" placeholder="name of input or jquery selector">
+                    <input type="text" class="form-control form-control-sm" id="inputSelector" placeholder="name of input or jquery selector">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="inputSelector" class="col-sm-2 col-form-label">Value type</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="valueType" name="valueType">
+                    <select class="form-control form-control-sm" id="valueType" name="valueType">
                         <option value="fixed">Fixed value</option>
                         <option value="rangeNumber">Range number</option>
                         <option value="enum">Enum</option>
@@ -42,7 +62,7 @@
             <div class="form-group row" style="display: none" id="fnFakerjs-wrapper">
                 <label for="fnFakerjs" class="col-sm-2 col-form-label">Function name</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="fnFakerjs" name="fnFakerjs">
+                    <select class="form-control form-control-sm" id="fnFakerjs" name="fnFakerjs">
                         <option value="lorem.word">lorem.word</option>
                         <option value="lorem.sentence">lorem.sentence</option>
                         <option value="lorem.sentences">lorem.sentences</option>
@@ -57,11 +77,11 @@
             <div class="form-group row">
                 <label for="args" class="col-sm-2 col-form-label">Args</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="args" placeholder="">
+                    <input type="text" class="form-control form-control-sm" id="args" placeholder="">
                 </div>
             </div>
 
-            <button id="save" type="button" class="btn btn-primary">Add rule</button>
+            <button id="save" type="button" class="btn btn-sm btn-primary">Add rule</button>
         </form>
 
         <hr />

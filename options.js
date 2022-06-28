@@ -21,7 +21,7 @@ function getTableRuleRow(inputSelector, valueType, args, action) {
 
 function drawTableRule(pageRules, pageUrl) {
     let container = $('#pageRuleContainer')
-    container.append($('<span/>').html(pageUrl))
+    container.append($('<h6/>').html('Page url: ' + pageUrl))
     let table = $('<table/>', {
         class: 'table table-bordered'
     })
@@ -151,3 +151,67 @@ chrome.storage.sync.get({
 
 let urlSearch = new URLSearchParams(window.location.search)
 document.getElementById('pageUrl').value = urlSearch.get('pageUrl')
+
+var isImportAction = false
+
+function setImportAction(flag) {
+    isImportAction = flag
+    if (flag) {
+        $("#btn-close-box").html('Import')
+    } else {
+        $("#btn-close-box").html('Close')
+    }
+}
+
+$("#export").click(function () {
+    setImportAction(false)
+    chrome.storage.sync.get({
+        pageRules: {}
+    }, function (items) {
+        let pageRules = items.pageRules
+
+        let pageRuleJson = JSON.stringify(pageRules)
+        $('#export-box').show()
+        $('#export-data').val(pageRuleJson)
+    });
+});
+
+$("#import").click(function () {
+    $('#export-box').show()
+    $('#export-data').val('')
+    setImportAction(true)
+
+})
+
+
+$("#btn-close-box").click(function () {
+    if (isImportAction) {
+        let pageRuleJson = $('#export-data').val()
+        if (pageRuleJson.trim()) {
+            let pageRulesImport = JSON.parse(pageRuleJson)
+
+            chrome.storage.sync.get({
+                pageRules: {}
+            }, function (items) {
+                let pageRules = items.pageRules
+                for (const [key, value] of Object.entries(pageRulesImport)) {
+                    pageRules[key] = value
+                }
+                
+                chrome.storage.sync.set({
+                    pageRules: pageRules
+                }, function () {
+                    drawAllTableRule(pageRules)
+                });
+
+            });
+        }
+        
+    }
+
+
+    $('#export-box').hide()
+    $('#export-data').val('')
+    setImportAction(false)
+});
+
