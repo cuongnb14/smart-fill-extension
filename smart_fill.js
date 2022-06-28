@@ -128,7 +128,10 @@ class SmartFiller {
     }
 
     getInputValueType(el) {
-        var inputName = $(el).attr('name').toLowerCase();
+        var inputName = $(el).attr('name')
+        if (inputName) {
+            inputName = inputName.toLowerCase()
+        }
 
         if (inputName.includes('name')) {
             return 'name'
