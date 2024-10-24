@@ -3,22 +3,24 @@ function fillAllInjectedFunction() {
     let filler = null
     let tabUrl = window.location.href.split('?')[0]
     let match = false
-    Object.keys(items.pageRules).forEach(pageUrl => {
-      if (!match) {
-        if (pageUrl.startsWith('^')) {
-          if(tabUrl.startsWith(pageUrl.slice(1,))){
-            match = true
-            filler = new SmartFiller(items.pageRules[pageUrl])
-          }
-        } else {
-          if (pageUrl == tabUrl) {
-            match = true
-            filler = new SmartFiller(items.pageRules[pageUrl])
+    if (items.pageRules) {
+      Object.keys(items.pageRules).forEach(pageUrl => {
+        if (!match) {
+          if (pageUrl.startsWith('^')) {
+            if(tabUrl.startsWith(pageUrl.slice(1,))){
+              match = true
+              filler = new SmartFiller(items.pageRules[pageUrl])
+            }
+          } else {
+            if (pageUrl == tabUrl) {
+              match = true
+              filler = new SmartFiller(items.pageRules[pageUrl])
+            }
           }
         }
-      }
-      
-    });
+      });
+    }
+    
 
     
     if (!filler) {
